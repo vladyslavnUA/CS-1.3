@@ -18,7 +18,11 @@ def decode(digits, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # TODO: Decode digits from binary (base 2)
-    # ...
+    decimalum = 0
+    for i in range(len(digits)):
+        digit = int(digits[i])
+        decimalum += digit * base ** i
+    return decimalum
     # TODO: Decode digits from hexadecimal (base 16)
     # ...
     # TODO: Decode digits from any base (2 up to 36)
@@ -79,3 +83,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print(decode("A"))
