@@ -18,15 +18,19 @@ def decode(digits, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # TODO: Decode digits from binary (base 2)
+    base_36 = string.digits + string.ascii_uppercase
+
+    digits = digits[::-1]
     decimalum = 0
-    for i in range(len(digits)):
-        digit = int(digits[i])
-        decimalum += digit * base ** i
+    # base = string.digits + 
+    for index, digit in enumerate(digits):
+        if digit in string.ascii_letters:
+            digit = base_36.index(digit.upper())
+        
+        # python uses ** for exponents
+        decimalum += int(digit) * (base**index)
+
     return decimalum
-    # TODO: Decode digits from hexadecimal (base 16)
-    # ...
-    # TODO: Decode digits from any base (2 up to 36)
-    # ...
 
 
 def encode(number, base):
@@ -38,13 +42,23 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
-    # TODO: Encode number in binary (base 2)
-    # ...
-    # TODO: Encode number in hexadecimal (base 16)
-    # ...
-    # TODO: Encode number in any base (2 up to 36)
-    # ...
+    base_36 = string.digits + string.ascii_uppercase
 
+    encoded = []
+
+    while number > 0:
+        quotient = number / base
+        remainder = number % base
+
+        split = str(quotient).split(".")  # split the quotient result by periods
+        number = int(split[0])
+
+        if 9 < remainder < base:
+            remainder = base_36[remainder].lower()
+        
+        encoded.insert(0, str(remainder))
+
+    return "".join(encoded)
 
 def convert(digits, base1, base2):
     """Convert given digits in base1 to digits in base2.
@@ -55,14 +69,9 @@ def convert(digits, base1, base2):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base1 <= 36, 'base1 is out of range: {}'.format(base1)
     assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
-    # TODO: Convert digits from base 2 to base 16 (and vice versa)
-    # ...
-    # TODO: Convert digits from base 2 to base 10 (and vice versa)
-    # ...
-    # TODO: Convert digits from base 10 to base 16 (and vice versa)
-    # ...
-    # TODO: Convert digits from any base to any base (2 up to 36)
-    # ...
+    
+    decoded = decode(digits, base1)
+    return encode(decoded, base2)
 
 
 def main():
@@ -83,4 +92,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    print(decode("A"))
