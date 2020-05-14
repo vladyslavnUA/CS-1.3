@@ -1,3 +1,6 @@
+
+
+
 def insert(self, item):
         if self.is_empty():
             self.root = BinaryTreeNode(item)
@@ -13,6 +16,9 @@ def insert(self, item):
             parent.right = BinaryTreeNode(item)
         self.size += 1
 
+        
+        
+        
 def _find_node_iterative(self, item):
         node = self.root
         # Loop until we descend past the closest leaf node
@@ -25,3 +31,6 @@ def _find_node_iterative(self, item):
                 node = node.right
         # Not found
         return None
+
+
+
